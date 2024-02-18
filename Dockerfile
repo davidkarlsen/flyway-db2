@@ -1,5 +1,9 @@
+FROM maven:latest as maven
+COPY pom.xml /tmp/
+RUN cd /tmp && mvn dependency:copy-dependencies
+
 FROM flyway/flyway:10.8.1
 ADD https://repo1.maven.org/maven2/com/ibm/db2/jcc/11.5.9.0/jcc-11.5.9.0.jar /flyway/drivers/
-ADD https://repo1.maven.org/maven2/com/azure/azure-identity/1.7.0/azure-identity-1.7.0.jar /flyway/drivers/
-ADD https://repo1.maven.org/maven2/com/azure/azure-core/1.34.0/azure-core-1.34.0.jar /flyway/drivers/
-RUN chmod a+rx /flyway/drivers/*
+COPY --from=maven /tmp/target/dependency/ /flyway/drivers
+RUN chmod -R a+rx /flyway/drivers/
+RUN chown -R root:root /flyway/drivers/
