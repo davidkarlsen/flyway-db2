@@ -1,4 +1,4 @@
-FROM maven:latest as maven
+FROM maven:latest AS maven
 COPY pom.xml /tmp/
 RUN cd /tmp && mvn dependency:copy-dependencies
 
