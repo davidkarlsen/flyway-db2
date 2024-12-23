@@ -5,6 +5,8 @@
 DBHOST=$1
 IMG=test
 
-docker build . -t ${IMG}
+docker build --no-cache . -t ${IMG}
 
 docker run --network=host --rm -e AZURE_TENANT_ID=$(uuid) -eAZURE_CLIENT_ID=$(uuid) -eAZURE_CLIENT_SECRET=$(uuid) -eFLYWAY_URL="jdbc:sqlserver://${DBHOST};databaseName=refapp;encrypt=false;authentication=ActiveDirectoryDefault" ${IMG} info
+
+docker run --rm --entrypoint /bin/ls ${IMG} /flyway/drivers | grep -E '(mssql|msal|auth)'
