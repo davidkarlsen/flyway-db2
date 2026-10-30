@@ -14,4 +14,6 @@ Image tags follow the upstream `flyway/flyway` version. Every upstream patch rel
 
 `X` and `X.Y` are force-pushed when a newer version in their series lands, but never move to a lower version. A late release in an older series (e.g. `13.8.1` after `13.10.3`) gets `13.8.1` and moves `13.8`, but leaves `13` on the newest release.
 
+`latest` is the `main` build, which always carries the newest release.
+
 Each `X.Y.Z` is built from a commit with `FROM flyway/flyway:X.Y.Z`. Releases older than `main` are built on a short-lived `release-X.Y` branch cut from the previous `X.Y` tag, so `main` never goes backwards; the branch is deleted once the release is tagged.
